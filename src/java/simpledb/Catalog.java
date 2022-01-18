@@ -22,8 +22,10 @@ public class Catalog {
      * Constructor.
      * Creates a new, empty catalog.
      */
+    HashMap<Integer, Table> tables = new HashMap<>();
     public Catalog() {
-        // some code goes here
+        // Done
+        tables = new HashMap<Integer, Table>();
     }
 
     /**
@@ -37,6 +39,13 @@ public class Catalog {
      */
     public void addTable(DbFile file, String name, String pkeyField) {
         // some code goes here
+        int tableId = file.getId();
+        for(int id : tables.keySet()) {
+            if(tables.get(id).name.equals(name) && id != tableId) {
+                tables.remove(id);
+            }
+        }
+        tables.put(tableId, new Table(file, name, pkeyField));
     }
 
     public void addTable(DbFile file, String name) {
@@ -59,8 +68,13 @@ public class Catalog {
      * @throws NoSuchElementException if the table doesn't exist
      */
     public int getTableId(String name) throws NoSuchElementException {
-        // some code goes here
-        return 0;
+        // Done
+        for(int id : tables.keySet()) {
+            if(tables.get(id).name.equals(name)) {
+                return id;
+            }
+        }
+        throw new NoSuchElementException("no such element");
     }
 
     /**
@@ -70,8 +84,11 @@ public class Catalog {
      * @throws NoSuchElementException if the table doesn't exist
      */
     public TupleDesc getTupleDesc(int tableid) throws NoSuchElementException {
-        // some code goes here
-        return null;
+        // Done
+        if(tables.containsKey(tableid)) {
+            return tables.get(tableid).file.getTupleDesc();
+        }
+        throw new NoSuchElementException("no such element");
     }
 
     /**
@@ -81,28 +98,38 @@ public class Catalog {
      *     function passed to addTable
      */
     public DbFile getDatabaseFile(int tableid) throws NoSuchElementException {
-        // some code goes here
-        return null;
+        // Done
+        if(tables.containsKey(tableid)) {
+            return tables.get(tableid).file;
+        }
+        throw new NoSuchElementException("no such element");
     }
 
     public String getPrimaryKey(int tableid) {
-        // some code goes here
-        return null;
+        // Done
+        if(tables.containsKey(tableid)) {
+            return tables.get(tableid).pkeyField;
+        }
+        throw new NoSuchElementException("no such element");
     }
 
     public Iterator<Integer> tableIdIterator() {
-        // some code goes here
-        return null;
+        // Done
+        return tables.keySet().iterator();
     }
 
     public String getTableName(int id) {
-        // some code goes here
-        return null;
+        // Done
+        if(tables.containsKey(id)) {
+            return tables.get(id).name;
+        }
+        throw new NoSuchElementException("no such element");
     }
     
     /** Delete all tables from the catalog */
     public void clear() {
-        // some code goes here
+        // Done
+        tables.clear();
     }
     
     /**

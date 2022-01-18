@@ -24,7 +24,7 @@ public class Tuple implements Serializable {
      *            instance with at least one field.
      */
     public Tuple(TupleDesc td) {
-        // some code goes here
+        // Done
         this.td = td;
     }
 
@@ -41,7 +41,7 @@ public class Tuple implements Serializable {
      *         be null.
      */
     public RecordId getRecordId() {
-        // some code goes here
+        // Done
         return rid;
     }
 
@@ -52,7 +52,7 @@ public class Tuple implements Serializable {
      *            the new RecordId for this tuple.
      */
     public void setRecordId(RecordId rid) {
-        // some code goes here
+        // Done
         this.rid = rid;
     }
 
@@ -65,8 +65,8 @@ public class Tuple implements Serializable {
      *            new value for the field.
      */
     public void setField(int i, Field f) {
+        // Done
         fields[i] = f;
-        // some code goes here
     }
 
     /**
@@ -76,7 +76,7 @@ public class Tuple implements Serializable {
      *            field index to return. Must be a valid index.
      */
     public Field getField(int i) {
-        // some code goes here
+        // Done
         return fields[i];
     }
 
@@ -89,7 +89,7 @@ public class Tuple implements Serializable {
      * where \t is any whitespace (except a newline)
      */
     public String toString() {
-        // some code goes here
+        // Done
         StringBuffer sb = new StringBuffer();
 
         sb.append(fields[0].toString());
@@ -105,7 +105,7 @@ public class Tuple implements Serializable {
      * */
     public Iterator<Field> fields()
     {
-        // some code goes here
+        // Done
         return new Iterator<Field>() {
             private int idx = -1;
 

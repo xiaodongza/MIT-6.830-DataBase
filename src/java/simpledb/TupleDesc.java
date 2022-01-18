@@ -76,7 +76,7 @@ public class TupleDesc implements Serializable {
      */
     private final TDItem[] dDItems;
     public TupleDesc(Type[] typeAr, String[] fieldAr) {
-        // some code goes here
+        // Done
         dDItems = new TDItem[typeAr.length];
         for(int i = 0; i < typeAr.length; i++) {
             dDItems[i] = new TDItem(typeAr[i], fieldAr[i]);
@@ -92,7 +92,7 @@ public class TupleDesc implements Serializable {
      *            TupleDesc. It must contain at least one entry.
      */
     public TupleDesc(Type[] typeAr) {
-        // some code goes here
+        // Done
         this(typeAr, new String[0]);
     }
 
@@ -100,7 +100,7 @@ public class TupleDesc implements Serializable {
      * @return the number of fields in this TupleDesc
      */
     public int numFields() {
-        // some code goes here
+        // Done
         return dDItems.length;
     }
 
@@ -114,7 +114,7 @@ public class TupleDesc implements Serializable {
      *             if i is not a valid field reference.
      */
     public String getFieldName(int i) throws NoSuchElementException {
-        // some code goes here
+        // Done
         if (i < 0 || i > dDItems.length) {
             throw new NoSuchElementException("Index out of range");
         }
@@ -132,7 +132,7 @@ public class TupleDesc implements Serializable {
      *             if i is not a valid field reference.
      */
     public Type getFieldType(int i) throws NoSuchElementException {
-        // some code goes here
+        // Done
         if (i < 0 || i > dDItems.length) {
             throw new NoSuchElementException("Index out of range");
         }
@@ -149,7 +149,7 @@ public class TupleDesc implements Serializable {
      *             if no field with a matching name is found.
      */
     public int fieldNameToIndex(String name) throws NoSuchElementException {
-        // some code goes here
+        // Done
         if (null != name) {
             for(int i = 0; i < dDItems.length; i++) {
                 if(dDItems[i].fieldName.equals(name)) {
@@ -165,7 +165,7 @@ public class TupleDesc implements Serializable {
      *         Note that tuples from a given TupleDesc are of a fixed size.
      */
     public int getSize() {
-        // some code goes here
+        // Done
         int size = 0;
         for(int i = 0; i < dDItems.length; i++) {
             size += dDItems[i].fieldType.getLen();
@@ -184,7 +184,7 @@ public class TupleDesc implements Serializable {
      * @return the new TupleDesc
      */
     public static TupleDesc merge(TupleDesc td1, TupleDesc td2) {
-        // some code goes here
+        // Done
         Type[] types = new Type[td1.dDItems.length+td2.dDItems.length];
         String[] fields = new String[td1.dDItems.length+td2.dDItems.length];
         int idx = 0;
@@ -252,7 +252,7 @@ public class TupleDesc implements Serializable {
      * @return String describing this descriptor.
      */
     public String toString() {
-        // some code goes here
+        // Done
         StringBuffer sb = new StringBuffer();
         sb.append(getFieldType(0));
         sb.append("("+this.getFieldName(0)+")");
