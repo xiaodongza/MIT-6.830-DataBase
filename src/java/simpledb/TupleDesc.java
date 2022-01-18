@@ -58,7 +58,6 @@ public class TupleDesc implements Serializable {
                 }
             }
         };
-        return null;
     }
 
     private static final long serialVersionUID = 1L;
@@ -77,8 +76,8 @@ public class TupleDesc implements Serializable {
     private final TDItem[] dDItems;
     public TupleDesc(Type[] typeAr, String[] fieldAr) {
         // Done
-        dDItems = new TDItem[typeAr.length];
-        for(int i = 0; i < typeAr.length; i++) {
+        dDItems = new TDItem[Math.max(typeAr.length, fieldAr.length)];
+        for(int i = 0; i < typeAr.length && i < fieldAr.length; i++) {
             dDItems[i] = new TDItem(typeAr[i], fieldAr[i]);
         }
     }
@@ -115,10 +114,14 @@ public class TupleDesc implements Serializable {
      */
     public String getFieldName(int i) throws NoSuchElementException {
         // Done
-        if (i < 0 || i > dDItems.length) {
+        if (i < 0 || i >= dDItems.length) {
             throw new NoSuchElementException("Index out of range");
+        } else {
+            if(null == dDItems[i])
+                return "";
+            return dDItems[i].fieldName;
         }
-        return dDItems[i].fieldName;
+
     }
 
     /**
@@ -136,6 +139,8 @@ public class TupleDesc implements Serializable {
         if (i < 0 || i > dDItems.length) {
             throw new NoSuchElementException("Index out of range");
         }
+        if(null == dDItems[i])
+            return null;
         return dDItems[i].fieldType;
     }
 
@@ -225,7 +230,7 @@ public class TupleDesc implements Serializable {
 
                 for (int i=0; i<n; i++) {
                     if (null == this.getFieldName(i)) {
-                        if (null != other.getFieldName(i)) {
+                        if (null == other.getFieldName(i)) {
                             return false;
                         }
                     }  else if (this.getFieldType(i) != other.getFieldType(i)) { // Will this work ?
@@ -235,7 +240,6 @@ public class TupleDesc implements Serializable {
                 return true;
             }
         }
-        return false;
     }
 
     public int hashCode() {
