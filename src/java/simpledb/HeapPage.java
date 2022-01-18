@@ -66,20 +66,17 @@ public class HeapPage implements Page {
         @return the number of tuples on this page
     */
     private int getNumTuples() {        
-        // some code goes here
-        return 0;
-
+        // Done
+        return (BufferPool.getPageSize()<<3)/((td.getSize()<<3)+1);
     }
 
     /**
      * Computes the number of bytes in the header of a page in a HeapFile with each tuple occupying tupleSize bytes
      * @return the number of bytes in the header of a page in a HeapFile with each tuple occupying tupleSize bytes
      */
-    private int getHeaderSize() {        
-        
-        // some code goes here
-        return 0;
-                 
+    private int getHeaderSize() {
+        // Done
+        return (numSlots+7)>>3;
     }
     
     /** Return a view of this page before it was modified
@@ -273,7 +270,7 @@ public class HeapPage implements Page {
      */
     public TransactionId isDirty() {
         // some code goes here
-	// Not necessary for lab1
+	    // Not necessary for lab1
         return null;      
     }
 
@@ -281,16 +278,23 @@ public class HeapPage implements Page {
      * Returns the number of empty slots on this page.
      */
     public int getNumEmptySlots() {
-        // some code goes here
-        return 0;
+        // Done
+        int num = 0;
+
+        for (int i=0; i<numSlots; i++) {
+            if (!isSlotUsed(i)) {
+                num++;
+            }
+        }
+        return num;
     }
 
     /**
      * Returns true if associated slot on this page is filled.
      */
     public boolean isSlotUsed(int i) {
-        // some code goes here
-        return false;
+        // Done
+        return 0 != (header[i>>3]&(1<<(i&7)));
     }
 
     /**
@@ -306,8 +310,30 @@ public class HeapPage implements Page {
      * (note that this iterator shouldn't return tuples in empty slots!)
      */
     public Iterator<Tuple> iterator() {
-        // some code goes here
-        return null;
+        // Done
+        return new Iterator<Tuple>() {
+            private int idx = -1;
+
+            @Override
+            public boolean hasNext() {
+                while (idx+1<numSlots && !isSlotUsed(idx+1)) {
+                    idx++;
+                }
+                return idx+1<numSlots;
+            }
+            @Override
+            public Tuple next() {
+                if (hasNext()) {
+                    return tuples[++idx];
+                } else {
+                    throw new NoSuchElementException();
+                }
+            }
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
     }
 
 }

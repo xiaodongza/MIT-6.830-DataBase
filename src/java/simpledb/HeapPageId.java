@@ -11,7 +11,8 @@ public class HeapPageId implements PageId {
      * @param pgNo The page number in that table.
      */
     public HeapPageId(int tableId, int pgNo) {
-        // some code goes here
+        // Done
+
     }
 
     /** @return the table associated with this PageId */
